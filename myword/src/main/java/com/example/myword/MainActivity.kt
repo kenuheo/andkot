@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("MissingInflatedId")
@@ -17,8 +18,22 @@ class MainActivity : ComponentActivity() {
 
         val button = findViewById<Button>(R.id.button)
         button.setOnClickListener {
-            textView.text = getWord()
+            textView.text = "${generateLottoNumbers()}"
         }
+    }
+
+    fun generateLottoNumbers(): List<Int> {
+        val lottoNumbers = mutableListOf<Int>()
+        val random = Random(System.currentTimeMillis())
+
+        while (lottoNumbers.size < 6) {
+            val randomNumber = random.nextInt(1, 46)
+            if (randomNumber !in lottoNumbers) {
+                lottoNumbers.add(randomNumber)
+            }
+        }
+
+        return lottoNumbers.sorted()
     }
 
     private fun getWord(): String {
